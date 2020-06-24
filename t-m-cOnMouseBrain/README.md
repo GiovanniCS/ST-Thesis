@@ -26,7 +26,7 @@ sudo docker run -it --rm -v "/Users/giovanni/Desktop/ST-Thesis/t-m-cOnMouseBrain
 Read clusters.csv into R
 ```R
 clusters <- read.csv("clusters.csv",header = FALSE)
-new_clusters <- factor(clusters$V2,labels = clusters$V1)
+new_clusters <- factor(clusters$V2)
 names(new_clusters) <- clusters$V1
 brain@active.ident <- new_clusters
 SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
