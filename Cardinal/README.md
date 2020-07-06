@@ -34,7 +34,7 @@ SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
 ````
 
 #Seurat reference:
-![](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb)
+![](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb.png)
 
 #Difference between gaussian and adaptive weights:
 ![](https://user-images.githubusercontent.com/25981629/86608264-926a3180-bfaa-11ea-87c0-f7f95996f2d4.png)
@@ -44,7 +44,6 @@ SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
 ![](https://user-images.githubusercontent.com/25981629/86604816-271e6080-bfa6-11ea-9fb2-93f2167848c8.png)
 ![](https://user-images.githubusercontent.com/25981629/86603581-7368a100-bfa4-11ea-9dcf-3f8a1bc94773.png)
 ![](https://user-images.githubusercontent.com/25981629/86601418-92196880-bfa1-11ea-8370-7564a636ce1f.png)
-#![](https://user-images.githubusercontent.com/25981629/86599042-5df07880-bf9e-11ea-8332-32beee37acb7.png)
 
 #Results with gaussian weights
 ![](https://user-images.githubusercontent.com/25981629/86607746-f3453a00-bfa9-11ea-95ae-c1d5cb97c447.png)
