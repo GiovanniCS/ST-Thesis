@@ -33,7 +33,7 @@ brain@active.ident <- clusters
 SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
 
 #Seurat reference:
-![](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb.png)
+![alt text](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb.png)
 
 #Difference between gaussian and adaptive weights:
 ![](https://user-images.githubusercontent.com/25981629/86608264-926a3180-bfaa-11ea-87c0-f7f95996f2d4.png)
