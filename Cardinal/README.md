@@ -31,9 +31,10 @@ clusters = skm@resultData@listData[[1]][["cluster"]]
 names(clusters) = names(brain@active.ident)
 brain@active.ident <- clusters
 SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
+````
 
 #Seurat reference:
-![alt text](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb.png)
+![](https://user-images.githubusercontent.com/25981629/86606773-b9276880-bfa8-11ea-85e8-db9c498b85eb)
 
 #Difference between gaussian and adaptive weights:
 ![](https://user-images.githubusercontent.com/25981629/86608264-926a3180-bfaa-11ea-87c0-f7f95996f2d4.png)
@@ -51,7 +52,7 @@ SpatialDimPlot(brain, label = TRUE, label.size = 3) + NoLegend()
 ![](https://user-images.githubusercontent.com/25981629/86614523-7028e180-bfb3-11ea-981d-df0a6964d92f.png)
 ![](https://user-images.githubusercontent.com/25981629/86616136-b3844f80-bfb5-11ea-8a64-dda9ef8cae93.png)
 
-
+````R
 #Alternative space-aware clustering proposed by Cardinal
 ssc <- spatialShrunkenCentroids(out, r=2, k=14, s=c(0,3,6,9))
 clusters = ssc@resultData@listData[[1]][["cluster"]]
