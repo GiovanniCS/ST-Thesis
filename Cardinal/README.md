@@ -14,16 +14,17 @@ library(SeuratData)
 library(Cardinal)
 
 brain <- LoadData("stxBrain", type = "anterior1")
+brain <- SCTransform(brain, assay = "Spatial", verbose = FALSE)
 
 #the code below simulate a mass spectrometry imaging dataset with spatial transcriptomics data of brain dataset
 m = matrix(brain@assays$SCT@counts,17668,2696)
-coord <- expand.grid(x=1:17668, y=1:2696)
+coord <- GetTissueCoordinates(brain)
 run <- factor(rep("run0", nrow(coord)))
 s <- simulateSpectrum(n=1, peaks=10, from=100, to=150000)
 mz = s$mz[1:17668]
 fdata <- MassDataFrame(mz)
 pdata <- PositionDataFrame(run=run, coord=coord)
-out <- MSImagingout(imageData=m,featureData=fdata,pixelData=pdata)
+out <- MSImagingExperiment(imageData=m,featureData=fdata,pixelData=pdata)
 
 #Space-aware clustering based on k-means clustering --> original solution of Alexandrov
 skm = spatialKMeans(out,r=5,k=15,method="adaptive")
