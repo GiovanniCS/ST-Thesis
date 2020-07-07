@@ -1,6 +1,5 @@
 # Spatial Seurat evaluation
-Seurat workflow is documented only with a particular dataset (mouse brain). How good is the proposed clusering algorithm on different datasets?  In this experiment, 3 other datasets a re retrieved from 10X website (mouse kidney, human lymph node and breast cancer). Then Seurat is applied and compared with spatialShrunkenCentroids clustering of Cardinal package.
-Workflow:
+Seurat workflow is documented only with a particular dataset (mouse brain). How good is the proposed clusering algorithm on different datasets?  In this experiment, 3 other datasets are retrieved from 10X website (mouse kidney, human lymph node and breast cancer). Then Seurat is applied and compared with spatialShrunkenCentroids clustering of Cardinal package.
 
 ## Human breast cancer tissue
 ![](https://user-images.githubusercontent.com/25981629/86806475-30c4c880-c079-11ea-9311-cf435b4341cf.png)
