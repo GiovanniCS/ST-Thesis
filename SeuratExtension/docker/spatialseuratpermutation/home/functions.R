@@ -135,7 +135,7 @@ return(cbind(CellName=colnames(countMatrix),Belonging_Cluster=cluster_result$clu
  
  
 clustering=function(matrixName,tissuePositionFile,profileDistance,spotDistance,
-    spotDistanceTransformation,nPerm,permAtTime,percent,nCluster,logTen,format,
+    spotDistanceTransformationWeight,nPerm,permAtTime,percent,nCluster,logTen,format,
     separator,pcaDimensions){
     if(separator=="tab"){separator2="\t"}else{separator2=separator} #BUG CORRECTION TAB PROBLEM 
     if(sparse=="FALSE"){
@@ -147,6 +147,11 @@ clustering=function(matrixName,tissuePositionFile,profileDistance,spotDistance,
             stop("Sparse Matrix in Seurat has to be raw count")
         }
     }
+    tissuePosition <- as.matrix(read.table(paste("./../",tissuePositionFile,sep=""),header=TRUE,sep="\t",row.names=1))
+    d <- dim(tissuePosition)[2]
+    tissuePosition <- tissuePosition[,(d-1):d]
+    tissuePosition <- tissuePosition[sort(rownames(tissuePosition)),]
+
     pbmc=CreateSeuratObject(countMatrix)
     mito.genes <- grep(pattern = "^MT-", x = rownames(x = pbmc@data), value = TRUE)
     percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
@@ -168,95 +173,94 @@ clustering=function(matrixName,tissuePositionFile,profileDistance,spotDistance,
     pbmc <- ProjectPCA(object = pbmc, do.print = FALSE)
     pbmc <- JackStraw(object = pbmc, num.replicate = 100, display.progress = FALSE,num.pc=pcaDimensions)
 
-DimElbowPlot2=function (object, reduction.type = "pca", dims.plot = 20, xlab = "", 
-    ylab = "", title = ""){
-    data.use <- GetDimReduction(object = object, reduction.type = reduction.type, 
-        slot = "sdev")
-    if (length(data.use) == 0) {
-        stop(paste("No standard deviation info stored for", reduction.type))
+    DimElbowPlot2=function (object, reduction.type = "pca", dims.plot = 20, xlab = "", 
+        ylab = "", title = ""){
+        data.use <- GetDimReduction(object = object, reduction.type = reduction.type, 
+            slot = "sdev")
+        if (length(data.use) == 0) {
+            stop(paste("No standard deviation info stored for", reduction.type))
+        }
+        if (length(x = data.use) < dims.plot) {
+            warning(paste("The object only has information for", 
+                length(x = data.use), "PCs."))
+            dims.plot <- length(x = data.use)
+        }
+        data.use <- data.use[1:dims.plot]
+        dims <- 1:length(x = data.use)
+        data.plot <- data.frame(dims, data.use)
+        return(cbind(dims,data.use))
+
     }
-    if (length(x = data.use) < dims.plot) {
-        warning(paste("The object only has information for", 
-            length(x = data.use), "PCs."))
-        dims.plot <- length(x = data.use)
+
+    PCElbowPlot2= function (object, num.pc = 20){
+        return(DimElbowPlot2(object = object, reduction.type = "pca", 
+            dims.plot = num.pc))
     }
-    data.use <- data.use[1:dims.plot]
-    dims <- 1:length(x = data.use)
-    data.plot <- data.frame(dims, data.use)
-    return(cbind(dims,data.use))
+    sdPC=PCElbowPlot2(pbmc)[,2]
+    #pdf("PCE_bowPlot.pdf")
+    #PCElbowPlot(object = pbmc)
+    #dev.off()
 
-}
+    if(pcaDimensions==0){
+        pcaDimensions=which.max(abs(diff(sdPC)-mean(diff(sdPC))))
+        if(pcaDimensions==1){pcaDimensions=2}
+    }
 
-PCElbowPlot2= function (object, num.pc = 20){
-    return(DimElbowPlot2(object = object, reduction.type = "pca", 
-        dims.plot = num.pc))
-}
-sdPC=PCElbowPlot2(pbmc)[,2]
-#pdf("PCE_bowPlot.pdf")
-#PCElbowPlot(object = pbmc)
-#dev.off()
+    distPCA <- dist(pbmc@dr$pca@cell.embeddings[,1:pcaDimensions],method="minkowski",p=as.numeric(profileDistance))
+    distCoord <- dist(tissuePosition,method="minkowski",p=as.numeric(spotDistance))
+    distCoord <- distCoord*((max(distPCA)*as.double(spotDistanceTransformationWeight))/(max(distCoord)))
+    finalDistance <- as.matrix(distCoord + distPCA)
+    pbmc <- FindClusters(object = pbmc, distance.matrix=finalDistance, resolution = 0.6, 
+        print.output = 0, save.SNN = TRUE)
 
-if(pcaDimensions==0){
-pcaDimensions=which.max(abs(diff(sdPC)-mean(diff(sdPC))))
-if(pcaDimensions==1){pcaDimensions=2}
-}
-
-pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use =seq(1,pcaDimensions), 
-    resolution = 0.6, print.output = 0, save.SNN = TRUE)
-    
     pbmc <- RunTSNE(object = pbmc, dims.use =seq(1,pcaDimensions), do.fast = TRUE)
     #TSNEPlot(object = pbmc)
-mainVector=as.numeric(pbmc@ident) 
-Coordinates=pbmc@dr$tsne@cell.embeddings
+    mainVector=as.numeric(pbmc@ident) 
+    Coordinates=pbmc@dr$tsne@cell.embeddings
 
-nCluster=max(mainVector)
-dir.create(paste("./",nCluster,sep=""))
-dir.create(paste("./",nCluster,"/Permutation",sep=""))
-setwd(paste("./",nCluster,sep=""))
+    nCluster=max(mainVector)
+    dir.create(paste("./",nCluster,sep=""))
+    dir.create(paste("./",nCluster,"/Permutation",sep=""))
+    setwd(paste("./",nCluster,sep=""))
 
-clustering.output= cbind(rownames(Coordinates),mainVector,Coordinates[,1],Coordinates[,2])
-clustering.output=silhouette(length(unique(mainVector)),clustering.output)
-colnames(clustering.output)=c("cellName","Belonging_Cluster","xChoord","yChoord","extraScore","intraScore","neighbor","silhouetteValue")
-write.table(clustering.output,paste(matrixName,"_clustering.output.",format,sep=""),sep=separator2, row.names = F)
-cycles=nPerm/permAtTime
-cat(getwd())
-for(i in 1:cycles){
-    system(paste("for X in $(seq ",permAtTime,")
-do
- nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",tissuePositionFile," ",profileDistance," ",spotDistance," ",spotDistanceTransformation," ",format," ",separator," ",logTen," ",pcaDimensions," ",sparse," $(($X +",(i-1)*permAtTime," )) & 
+    clustering.output= cbind(rownames(Coordinates),mainVector,Coordinates[,1],Coordinates[,2])
+    clustering.output=silhouette(length(unique(mainVector)),clustering.output)
+    colnames(clustering.output)=c("cellName","Belonging_Cluster","xChoord","yChoord","extraScore","intraScore","neighbor","silhouetteValue")
+    write.table(clustering.output,paste(matrixName,"_clustering.output.",format,sep=""),sep=separator2, row.names = F)
+    cycles=nPerm/permAtTime
+    cat(getwd())
+    for(i in 1:cycles){
+            system(paste("for X in $(seq ",permAtTime,")
+        do
+        nohup Rscript ./../../../home/permutation.R ",percent," ",matrixName," ",tissuePositionFile," ",profileDistance," ",spotDistance," ",spotDistanceTransformationWeight," ",format," ",separator," ",logTen," ",pcaDimensions," ",sparse," $(($X +",(i-1)*permAtTime," )) & 
 
-done"))
-d=1
-while(length(list.files("./Permutation",pattern=paste("*.",format,sep="")))!=i*permAtTime*2){
-if(d==1){cat(paste("Cluster number ",nCluster," ",((permAtTime*i))/nPerm*100," % complete \n"))}
-d=2
-}
+        done"))
+        d=1
+        while(length(list.files("./Permutation",pattern=paste("*.",format,sep="")))!=i*permAtTime*2){
+            if(d==1){cat(paste("Cluster number ",nCluster," ",((permAtTime*i))/nPerm*100," % complete \n"))}
+            d=2
+        }
+        system("echo 3 > /proc/sys/vm/drop_caches")
+        system("sync")
+        gc()
+    }
+    #write.table(as.matrix(sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
+    #write.table(as.matrix(sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
 
-system("echo 3 > /proc/sys/vm/drop_caches")
-system("sync")
-gc()
-}
+    cluster_p=sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
+    killedC=sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
 
+    write.table(as.matrix(cluster_p,col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
+    write.table(as.matrix(killedC,col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
 
-#write.table(as.matrix(sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
-#write.table(as.matrix(sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]}),col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
+    pdf("hist.pdf")
+    clusters=apply(cluster_p,2,FUN=function(x){max(x)})
+    hist(clusters,xlab="nCluster",breaks=length(unique(cluster_p)))
+    dev.off()
 
-cluster_p=sapply(list.files("./Permutation/",pattern="cluster*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
-killedC=sapply(list.files("./Permutation/",pattern="killC*"),FUN=function(x){a=read.table(paste("./Permutation/",x,sep=""),header=TRUE,col.names=1,sep=separator2)[[1]]})
-
-write.table(as.matrix(cluster_p,col.names=1),paste(matrixName,"_",nCluster,"_clusterP.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
-write.table(as.matrix(killedC,col.names=1),paste(matrixName,"_",nCluster,"_killedCell.",format,sep=""),sep=separator2,row.names=FALSE, quote=FALSE)
-
-
-pdf("hist.pdf")
-clusters=apply(cluster_p,2,FUN=function(x){max(x)})
-hist(clusters,xlab="nCluster",breaks=length(unique(cluster_p)))
-dev.off()
-
-write.table(sort(unique(clusters)),paste("./../rangeVector.",format,sep=""),sep=separator2,row.names=FALSE,col.names=FALSE)
-system("rm -r Permutation")
-return(length(unique(mainVector)))
-
+    write.table(sort(unique(clusters)),paste("./../rangeVector.",format,sep=""),sep=separator2,row.names=FALSE,col.names=FALSE)
+    system("rm -r Permutation")
+    return(length(unique(mainVector)))
 }
 relationMatrix=function(mainVector,nameVector){
  rel.matrix=as.numeric(mainVector) %*% t(1/as.numeric(mainVector))

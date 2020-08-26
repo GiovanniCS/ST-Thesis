@@ -51,10 +51,10 @@ print("Compiuting distance measures..")
 mouse <- RunPCA(mouse, assay = "SCT", verbose = FALSE)
 m = mouse@reductions[["pca"]]@cell.embeddings
 distPCA = dist(m,method="minkowski",p=profilesDistance)  
-coord <- GetTissueCoordinates(mouse)
+coord <- mouse@images[["slice1"]]@coordinates[4:5]
 distcoord = dist(coord,method="minkowski",p=spotDistance)
 if (spotDistanceTransformation == "linear" & max(distcoord) > max(distPCA)){
-    distcoord = distcoord*(max(distPCA)/max(distcoord))
+    distcoord = distcoord*(max(distPCA)/(max(distcoord)*2))
 } else if (spotDistanceTransformation == "log"){
     distcoord = log(distcoord+1)
 } else if (spotDistanceTransformation == "sqrt") {

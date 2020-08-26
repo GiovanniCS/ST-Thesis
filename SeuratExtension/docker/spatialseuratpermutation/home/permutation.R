@@ -6,6 +6,10 @@ library(Matrix)
 p <- arg_parser("permutation")
 p <- add_argument(p, "percent", help="matrix count name")
 p <- add_argument(p, "matrixName", help="Percentage of cell removed for bootstrap algorithm ")
+p <- add_argument(p, "tissuePositionFile", help="file with spot coordinates")
+p <- add_argument(p, "profileDistance", help="parameter of minkowski distance bw transcriptional profiles")
+p <- add_argument(p, "spotDistance", help="parameter of minkowski distance bw spot position")
+p <- add_argument(p, "spotDistanceTransformationWeight", help="transformation of spot distance measure")
 p <- add_argument(p, "format", help="matrix format like csv, txt...")
 p <- add_argument(p, "separator", help="matrix separator ")
 p <- add_argument(p, "logTen", help="1 or 0 if is matrix is already in log10 or if is not")
@@ -16,6 +20,10 @@ p <- add_argument(p, "index", help="Clulstering method: SIMLR tSne Griph")
 argv <- parse_args(p)
 cat(system("pwd"))
 matrixName=argv$matrixName
+tissuePositionFile=argv$tissuePositionFile
+profileDistance=argv$profileDistance
+spotDistance=argv$spotDistance
+spotDistanceTransformationWeight=as.double(argv$spotDistanceTransformationWeight)
 percent=as.numeric(argv$percent)
 format=argv$format
 separator=argv$separator
@@ -29,25 +37,29 @@ source("./../../../home/functions.R")
 if(separator=="tab"){separator="\t"} #BUG CORRECTION TAB separator PROBLEM 
 
 if(sparse=="FALSE"){
-countMatrix=as.matrix(read.table(paste("./../../",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1))
-if(logTen==1){countMatrix=10^(countMatrix)}
-killedCell=sample(ncol(countMatrix),(ncol(countMatrix)*percent/100))
-countMatrix=countMatrix[,-killedCell]
-
+    countMatrix <- as.matrix(read.table(paste("./../../",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1))
+    if(logTen==1){countMatrix=10^(countMatrix)}
+    countMatrix <- countMatrix[,sort(colnames(countMatrix))]
+    killedCell <- sample(ncol(countMatrix),(ncol(countMatrix)*percent/100))
+    countMatrix <- countMatrix[,-killedCell]
 }else{
-countMatrix <- Read10X(data.dir = "./..")
-if(logTen==1){
-stop("Sparse Matrix in Seurat has to be raw count")
+    countMatrix <- Read10X(data.dir = "./..")
+    if(logTen==1){
+        stop("Sparse Matrix in Seurat has to be raw count")
+    }
+    countMatrix <- countMatrix[,sort(colnames(countMatrix))]
+    killedCell <- sample(countMatrix@Dim[2],(countMatrix@Dim[2]*percent/100))
+    countMatrix <- as.matrix(countMatrix)
+    countMatrix <- countMatrix[,-killedCell]
+    countMatrix <- Matrix(countMatrix, sparse = TRUE) 
 }
+tissuePosition <- as.matrix(read.table(paste("./../../",tissuePositionFile,sep=""),header=TRUE,sep="\t",row.names=1))
+d <- dim(tissuePosition)[2]
+tissuePosition <- tissuePosition[,(d-1):d]
+tissuePosition <- tissuePosition[sort(rownames(tissuePosition)),]
+tissuePosition <- tissuePosition[-killedCell,]
 
-killedCell=sample(countMatrix@Dim[2],(countMatrix@Dim[2]*percent/100))
-countMatrix=as.matrix(countMatrix)
-countMatrix=countMatrix[,-killedCell]
-countMatrix=Matrix(countMatrix, sparse = TRUE) 
-
-}
-
-pbmc=CreateSeuratObject(countMatrix)
+pbmc <- CreateSeuratObject(countMatrix)
 mito.genes <- grep(pattern = "^MT-", x = rownames(x = pbmc@data), value = TRUE)
 percent.mito <- Matrix::colSums(pbmc@raw.data[mito.genes, ])/Matrix::colSums(pbmc@raw.data)
 
@@ -63,20 +75,22 @@ pbmc <- FindVariableGenes(object = pbmc, mean.function = ExpMean, dispersion.fun
     x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5,do.plot = FALSE)
 pbmc <- ScaleData(object = pbmc, vars.to.regress = c("nUMI", "percent.mito"))
 
-
 pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = FALSE, pcs.print = 1:5, 
     genes.print = 5)
     
 pbmc <- ProjectPCA(object = pbmc, do.print = FALSE)
-pbmc <- JackStraw(object = pbmc, num.replicate = 100, display.progress = FALSE,num.pc=20)
+#pbmc <- JackStraw(object = pbmc, num.replicate = 100, display.progress = FALSE,num.pc=20)
 
-pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use =seq(1,pcaDimensions), 
-    resolution = 0.6, print.output = 0, save.SNN = TRUE)
-    
-    pbmc <- RunTSNE(object = pbmc, dims.use =seq(1,pcaDimensions), do.fast = TRUE)
-mainVector=pbmc@ident 
+distPCA <- dist(pbmc@dr$pca@cell.embeddings[,1:pcaDimensions],method="minkowski",p=profileDistance)
+distCoord <- dist(tissuePosition,method="minkowski",p=spotDistance)
+distCoord <- distCoord*((max(distPCA)*spotDistanceTransformationWeight)/(max(distCoord)))
+finalDistance <- as.matrix(distCoord + distPCA)
+pbmc <- FindClusters(object = pbmc, distance.matrix=finalDistance, resolution = 0.6, 
+    print.output = 0, save.SNN = TRUE)
+pbmc <- RunTSNE(object = pbmc, dims.use =seq(1,pcaDimensions), do.fast = TRUE)
+mainVector <- pbmc@ident 
 
-clustering.output=mainVector
+clustering.output <- mainVector
 
 write.table(mainVector,paste("./Permutation/clusterB_",index,".",format,sep=""),sep=separator)
 

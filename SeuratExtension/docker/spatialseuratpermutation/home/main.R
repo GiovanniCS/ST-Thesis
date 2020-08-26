@@ -1,19 +1,18 @@
- 
- setwd("/home")
- 
+setwd("/home")
+
 source("functions.R")
- library(Seurat)
- library("argparser")
- library(dplyr)
- library("vioplot")
- library("Publish")
+library(Seurat)
+library("argparser")
+library(dplyr)
+library("vioplot")
+library("Publish")
  
 p <- arg_parser("permutation")
 p <- add_argument(p, "matrixName", help="matrix count name")
 p <- add_argument(p, "tissuePositionFile", help="file with spot coordinates")
 p <- add_argument(p, "profileDistance", help="parameter of minkowski distance bw transcriptional profiles")
 p <- add_argument(p, "spotDistance", help="parameter of minkowski distance bw spot position")
-p <- add_argument(p, "spotDistanceTransformation", help="transformation of spot distance measure")
+p <- add_argument(p, "spotDistanceTransformationWeight", help="transformation of spot distance measure")
 p <- add_argument(p, "nPerm", help="Permutation number for bootstrap algorithm ")
 p <- add_argument(p, "permAtTime", help="Number of permutation in parallel")
 p <- add_argument(p, "percent", help="Percentage of cell removed for bootstrap algorithm ")
@@ -48,7 +47,7 @@ matrixName=argv$matrixName
 tissuePositionFile=argv$tissuePositionFile
 profileDistance=argv$profileDistance
 spotDistance=argv$spotDistance
-spotDistanceTransformation=argv$spotDistanceTransformation
+spotDistanceTransformationWeight=argv$spotDistanceTransformationWeight
 nPerm=as.numeric(argv$nPerm)
 permAtTime=as.numeric(argv$permAtTime)
 percent=as.numeric(argv$percent)
@@ -63,15 +62,15 @@ dir.create(paste("./../scratch/",matrixName,sep=""))
  
 
 
-  setwd(paste("./../scratch/",matrixName,"/",sep=""))
+setwd(paste("./../scratch/",matrixName,"/",sep=""))
 nCluster=clustering(matrixName,tissuePositionFile,profileDistance,spotDistance,
-  spotDistanceTransformation,nPerm,permAtTime,percent,nCluster=0,logTen,format,
+  spotDistanceTransformationWeight,nPerm,permAtTime,percent,nCluster=0,logTen,format,
   separator,pcaDimensions)
 
 
 setwd("./../../../home")
-  setwd(paste("./../scratch/",matrixName,"/",sep=""))
-  silhouettePlot(matrixName,nCluster,format,separator)
+setwd(paste("./../scratch/",matrixName,"/",sep=""))
+silhouettePlot(matrixName,nCluster,format,separator)
 
   
 #dir.create("./../../data/Results")
