@@ -52,29 +52,23 @@ if(sparse=="FALSE"){
     countMatrix <- countMatrix[,-killedCell]
     countMatrix <- Matrix(countMatrix, sparse = TRUE) 
 }
-writeLines(c("CountMatrix"), "debug.txt")
 tissuePosition <- as.matrix(read.table(paste("./../../",tissuePositionFile,sep=""),header=TRUE,sep="\t",row.names=1))
 d <- dim(tissuePosition)[2]
 tissuePosition <- tissuePosition[,(d-1):d]
 tissuePosition <- tissuePosition[sort(rownames(tissuePosition)),]
 tissuePosition <- tissuePosition[-killedCell,]
-writeLines(c("TissuePosition"), "debug.txt")
 pbmc <- CreateSeuratObject(countMatrix)
 pbmc <- SCTransform(pbmc, assay = "RNA", verbose = FALSE)
 pbmc <- RunPCA(pbmc, assay = "SCT", verbose = FALSE)
-writeLines(c("PCA"), "debug.txt")
 m = pbmc@reductions[["pca"]]@cell.embeddings[,1:pcaDimensions]
 distPCA = dist(m,method="minkowski",p=as.numeric(profileDistance))  
 distCoord <- dist(tissuePosition,method="minkowski",p=as.numeric(spotDistance))
 distCoord <- distCoord*((max(distPCA)*as.double(spotDistanceTransformationWeight))/(max(distCoord)))
 finalDistance <- as.matrix(distPCA + distCoord)
-writeLines(c("FinalDistance"), "debug.txt")
 neighbors <- FindNeighbors(finalDistance)
 neighbors <- list(neighbors_nn=neighbors$nn,neighbors_snn=neighbors$snn)
 pbmc@graphs <- neighbors
-writeLines(c("Neighbors"), "debug.txt")
 pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "neighbors_snn")
-writeLines(c("Clusters"), "debug.txt")
 mainVector <- pbmc@active.ident
 clustering.output <- mainVector
 
@@ -83,4 +77,3 @@ write.table(killedCell,paste("./Permutation/killC_",index,".",format,sep=""),sep
 rm(list=setdiff(ls(),"index"))
 dir.create("./memory")
 system(paste("cat /proc/meminfo >  ./memory/",index,".txt",sep=""))
-writeLines(c("Fine"), "debug.txt")
