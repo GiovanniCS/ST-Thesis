@@ -4,17 +4,17 @@ library(RColorBrewer)
 library(ggplot2)
 
 args = commandArgs(trailingOnly=TRUE)
-profilesDistance = 2
+profileDistance = 2
 spotDistance = 2
 spotDistanceTransformation = "none"
 workingDir = ""
 print("Parsing the provided parameters ..")
 for(i in args){
     param = strsplit(i,"=")[[1]]
-    if(param[1] == "profilesDistance"){
-        profilesDistance = suppressWarnings(as.integer(param[2]))
-        if(is.na(profilesDistance))
-            stop(paste("Provided param profilesDistance is not a number. ",
+    if(param[1] == "profileDistance"){
+        profileDistance = suppressWarnings(as.integer(param[2]))
+        if(is.na(profileDistance))
+            stop(paste("Provided param profileDistance is not a number. ",
                 paste(param,collapse="=")))
     }
     else if (param[1] == "spotDistance") {
@@ -50,7 +50,7 @@ mouse <- suppressWarnings(SCTransform(mouse, assay = "Spatial", verbose = FALSE)
 print("Compiuting distance measures..")
 mouse <- RunPCA(mouse, assay = "SCT", verbose = FALSE)
 m = mouse@reductions[["pca"]]@cell.embeddings
-distPCA = dist(m,method="minkowski",p=profilesDistance)  
+distPCA = dist(m,method="minkowski",p=profileDistance)  
 coord <- mouse@images[["slice1"]]@coordinates[4:5]
 distcoord = dist(coord,method="minkowski",p=spotDistance)
 if (spotDistanceTransformation == "linear" & max(distcoord) > max(distPCA)){
@@ -70,10 +70,10 @@ mouse <- suppressWarnings(FindClusters(mouse, verbose = FALSE,
 print("Generating output figure..")
 palette = colorRampPalette(brewer.pal(11,name="BrBG"))
 clusters = length(levels(mouse@active.ident))
-jpeg(file=paste("profilesDistance:",profilesDistance," spotDistance:",
+jpeg(file=paste("profileDistance:",profileDistance," spotDistance:",
     spotDistance," spotDistanceTransformation:",spotDistanceTransformation,".jpeg"))
 title.style = element_text(size=12)
-title = paste("Minkowski dist. of param: ",profilesDistance," between profiles \nMinkowski dist. of param: ",
+title = paste("Minkowski dist. of param: ",profileDistance," between profiles \nMinkowski dist. of param: ",
               spotDistance," between fisical spots \nFisical distance transformation: ",spotDistanceTransformation)
 suppressWarnings(SpatialDimPlot(mouse, label = TRUE, label.size = 3,
     cols=palette(clusters)) + ggtitle(title) + theme(plot.title=title.style))

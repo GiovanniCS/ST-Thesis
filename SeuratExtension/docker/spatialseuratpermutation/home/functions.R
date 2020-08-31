@@ -147,6 +147,7 @@ clustering=function(matrixName,tissuePositionFile,profileDistance,spotDistance,
             stop("Sparse Matrix in Seurat has to be raw count")
         }
     }
+    countMatrix <- countMatrix[,sort(colnames(countMatrix))]
     tissuePosition <- as.matrix(read.table(paste("./../",tissuePositionFile,sep=""),header=TRUE,sep="\t",row.names=1))
     d <- dim(tissuePosition)[2]
     tissuePosition <- tissuePosition[,(d-1):d]
@@ -209,7 +210,7 @@ clustering=function(matrixName,tissuePositionFile,profileDistance,spotDistance,
     distPCA <- dist(pbmc@dr$pca@cell.embeddings[,1:pcaDimensions],method="minkowski",p=as.numeric(profileDistance))
     distCoord <- dist(tissuePosition,method="minkowski",p=as.numeric(spotDistance))
     distCoord <- distCoord*((max(distPCA)*as.double(spotDistanceTransformationWeight))/(max(distCoord)))
-    finalDistance <- as.matrix(distCoord + distPCA)
+    finalDistance <- as.matrix(distPCA + distCoord)
     pbmc <- FindClusters(object = pbmc, distance.matrix=finalDistance, resolution = 0.6, 
         print.output = 0, save.SNN = TRUE)
 
