@@ -1,5 +1,5 @@
 # Seurate extension in rCASC
-This script allows to execute my extension of Seurato clustring inside rCASC container architecture.
+This script allows to execute my extension of Seurat clustring inside rCASC container architecture.
 
 Workflow:  
 Bash
