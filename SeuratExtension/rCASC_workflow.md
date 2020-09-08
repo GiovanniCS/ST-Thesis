@@ -1,6 +1,16 @@
 # rCASC clustering stability evaluation
 In this experiment, the Seurat clustering extension is evaluated trough rCASC 
-stability score. In this ext a` a^{\prime}
+stability score. In this extension, the distance matrix used to compute the SNN network
+(Shared Nearest Neighbor) is computed manually adding two distinct distance measure.  
+The first one is the euclidean distance (default parameter "profileDistance") between
+transcriptional profiles in PCA space.  
+The second one is the euclidean distance (default parameter "spotDistance") between
+phisical distance of spots on the 10X chip.  
+Moreover "spotDistanceTransformationWeight" parameter can be decided in [0,1] in order
+to give a weigth to the second measure during linear scaling step. The second measure is 
+scaled according to the following formula
+
+<img src="https://user-images.githubusercontent.com/25981629/92521037-d84aac80-f21c-11ea-9d50-e43189e8d29f.png" width="600" />
 
 Workflow:
 
