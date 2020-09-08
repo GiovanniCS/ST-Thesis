@@ -1,16 +1,16 @@
 # rCASC clustering stability evaluation
 In this experiment, the Seurat clustering extension is evaluated trough rCASC 
-stability score. In this extension, the distance matrix used to compute the SNN network
-(Shared Nearest Neighbor) is computed manually adding two distinct distance measure.  
+stability score. In my extension, the distance matrix used to compute the SNN network
+(Shared Nearest Neighbor) is computed manually adding two distinct distance measures.  
 The first one is the euclidean distance (default parameter "profileDistance") between
 transcriptional profiles in PCA space.  
 The second one is the euclidean distance (default parameter "spotDistance") between
-phisical distance of spots on the 10X chip.  
+physical distance of spots on the 10X chip.  
 Moreover "spotDistanceTransformationWeight" parameter can be decided in [0,1] in order
 to give a weigth to the second measure during linear scaling step. The second measure is 
 scaled according to the following formula
 
-<img src="https://user-images.githubusercontent.com/25981629/92521037-d84aac80-f21c-11ea-9d50-e43189e8d29f.png" width="600" />
+<img src="https://user-images.githubusercontent.com/25981629/92521037-d84aac80-f21c-11ea-9d50-e43189e8d29f.png" width="800" />
 
 Workflow:
 
@@ -56,8 +56,8 @@ Clustering visualization and Stability_Violin_Plot, spotDistanceTransformationWe
 
 Clustering visualization and Stability_Violin_Plot, spotDistanceTransformationWeight = 0.75 (max of position distance is 75% of the max of transcriptional profiles distance)
 <p float="left">
-  <img src="" width="400" />
-  <img src="" width="300" /> 
+  <img src="https://user-images.githubusercontent.com/25981629/92522204-b6eac000-f21e-11ea-94ef-52fcd0bc6357.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/25981629/92522022-7428e800-f21e-11ea-8413-333541de326a.png" width="300" /> 
 </p>
 
 
