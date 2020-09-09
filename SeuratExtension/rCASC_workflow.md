@@ -46,7 +46,7 @@ cluster <- as.numeric(list.dirs(cluster.path, full.names = FALSE, recursive = FA
 permAnalysisSeurat(group="docker",scratch.folder = scratch.folder,file=file, 
   nCluster=cluster,separator="\t",sp=0.8)
 # Better cleaning working directory between different permutation configurations.
-# es. Resutls/ and temporary files
+# es. Results/ and temporary files
 
 #New Seurat workflow (with spot distance - 2020 version)
 tissuePosition <- paste(getwd(),"/spot_coordinates.txt",sep="")
