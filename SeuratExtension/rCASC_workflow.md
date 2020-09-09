@@ -24,6 +24,7 @@ rm -rf __MACOSX/ filtered_expression_matrix.txt.zip
 
 # skip download of unnecessary containers through manual pull
 docker pull giovannics/spatial2020seuratpermutation
+docker pull repbioinfo/seuratpermutation
 docker pull repbioinfo/seuratanalysis
 ````
 ````R
@@ -34,20 +35,44 @@ library(rCASC)
 
 scratch.folder <- paste(getwd(),"/scratch",sep="")
 file <- paste(getwd(),"/filtered_expression_matrix.txt",sep="")
+
+#Old Seurat workflow (no spot distance - 2018 version)
+seuratPermutation(group="docker",scratch.folder=scratch.folder, file=file, nPerm=80, 
+  permAtTime=8, percent=10, separator="\t", logTen=0,pcaDimensions=5, seed=111)
+
+cluster.path <- paste(data.folder=dirname(file), "Results", 
+  strsplit(basename(file),"\\.")[[1]][1], sep="/")
+cluster <- as.numeric(list.dirs(cluster.path, full.names = FALSE, recursive = FALSE))
+permAnalysisSeurat(group="docker",scratch.folder = scratch.folder,file=file, 
+  nCluster=cluster,separator="\t",sp=0.8)
+# Better cleaning working directory between different permutation configurations.
+# es. Resutls/ and temporary files
+
+#New Seurat workflow (with spot distance - 2020 version)
 tissuePosition <- paste(getwd(),"/spot_coordinates.txt",sep="")
 spatial2020SeuratPermutation(group="docker",scratch.folder = scratch.folder,nPerm=80, 
     file=file, tissuePosition=tissuePosition, profileDistance=2, spotDistance=2, 
     spotDistanceTransformationWeight=1, permAtTime=8, percent=10, separator="\t",
     logTen=0, pcaDimensions=5, seed=111)
 
-cluster.path <- paste(data.folder=dirname(file), "Results", strsplit(basename(file),"\\.")[[1]][1], sep="/")
+cluster.path <- paste(data.folder=dirname(file), "Results", 
+  strsplit(basename(file),"\\.")[[1]][1], sep="/")
 cluster <- as.numeric(list.dirs(cluster.path, full.names = FALSE, recursive = FALSE))
 
-permAnalysisSeurat(group="docker",scratch.folder = scratch.folder,file=file, nCluster=cluster,separator="\t",sp=0.8)
+permAnalysisSeurat(group="docker",scratch.folder = scratch.folder,file=file, 
+  nCluster=cluster,separator="\t",sp=0.8)
 
-# Repeat with spotDistanceTransformationWeight = 0, 0.25, 0.5 and 0.75
+# Repeat with spotDistanceTransformationWeight = 0.75, 0.5, 0.25, 0
 ````
+## Old Seurat (v2.3.4 - 2018) workflow results
+Clustering visualization and Stability_Violin_Plot, 
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/25981629/92618883-1d281f00-f2c1-11ea-9809-8d6917dcbbe1.png" width="400" />
+  <img src="https://user-images.githubusercontent.com/25981629/92618429-a3903100-f2c0-11ea-991e-f68613b8b717.png" width="300" /> 
+</p>
 
+
+## New Seurat (v3.2.0 - 2020) workflow results
 Clustering visualization and Stability_Violin_Plot, spotDistanceTransformationWeight = 1 (max of position distance is equal to the max of transcriptional profiles distance)
 <p float="left">
   <img src="https://user-images.githubusercontent.com/25981629/92493331-ac1b3580-f1f4-11ea-8296-c954082e2035.png" width="400" />
