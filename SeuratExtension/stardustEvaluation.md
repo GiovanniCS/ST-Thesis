@@ -1,5 +1,5 @@
 # Stardust statistical evaluation
-The figure below describe the CSSs distribution of 5 Stardust configurations. For the configuration '0.5' (i.e. distance based on space weights half of the distance based on transcriptional profiles) a statistical evaluation has been performed.
+The figure below describe the CSSs distribution of 5 Stardust configurations (Lymph Node dataset). For the configuration '0.5' (i.e. distance based on space weights half of the distance based on transcriptional profiles) a statistical evaluation has been performed.
 
 <img src="https://user-images.githubusercontent.com/25981629/96877431-e9bce080-1479-11eb-990a-20a0d59263a1.png" width="800" />
 
