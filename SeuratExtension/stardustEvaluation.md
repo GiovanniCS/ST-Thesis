@@ -71,7 +71,7 @@ print(paste("Kolmogorov: in ", sum(kolmogorov < (0.05/100)), " times over 100 th
 In conclusion the increase in CSSs for "0.5" configuration of Stardust is statistically significative if compared with the results based on shuffled position of spots.
 
 # All configurations
-Repeating the above tests for all the configuration of Startust, we obtain the following results:
+Repeating the above tests for all the configurations of Startust, we obtain the following results:
 <img src="https://user-images.githubusercontent.com/25981629/97899582-c6c3e380-1d39-11eb-921d-4f6a285d5297.png" width="800" />
 
 We can see that increasing the space weight, more null hypothesis are rejected.  
@@ -79,3 +79,6 @@ Also for kolmogorov-Smirnov test this trend is true but already at configuration
 
 <img src="https://user-images.githubusercontent.com/25981629/97899895-32a64c00-1d3a-11eb-8519-cc0525d7cfc4.png" width="800" />
 
+
+Results for Human breast Cancer 1 dataset
+<img src="https://user-images.githubusercontent.com/25981629/98561279-0134ff80-22a9-11eb-8140-67fe215aa2d9.png" width="800" />
