@@ -22,3 +22,18 @@ Mouse Kidney scores across 5 Stardusrt configurations
 
 Statistical evaluation for MK dataset 
 <img src="https://user-images.githubusercontent.com/25981629/99182372-ee9d4900-2734-11eb-9f9d-d808a63938b6.png" width="800" />
+
+
+
+Human Heart scores across 5 Stardusrt configurations
+
+<img src="https://user-images.githubusercontent.com/25981629/99257943-1d402000-2818-11eb-98ed-ae08678a3eab.png" width="800" />
+
+Statistical evaluation for HH dataset  
+Missing results
+
+HH comparison base vs best:  
+Base
+<img src="https://user-images.githubusercontent.com/25981629/99257902-0d284080-2818-11eb-8c28-33f8cb8f1c67.png" width="800" />
+Best (0.5)
+<img src="https://user-images.githubusercontent.com/25981629/99257926-15807b80-2818-11eb-99e2-58accfd314b2.png" width="800" />
