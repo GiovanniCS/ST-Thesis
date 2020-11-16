@@ -32,7 +32,8 @@ Human Heart scores across 5 Stardusrt configurations
 Statistical evaluation for HH dataset  
 Missing results
 
-HH comparison base vs best:  
+HH comparison base vs best:
+<img src="https://user-images.githubusercontent.com/25981629/99258554-077f2a80-2819-11eb-900e-1447cc46d217.png" width="800" />
 Base
 <img src="https://user-images.githubusercontent.com/25981629/99257902-0d284080-2818-11eb-8c28-33f8cb8f1c67.png" width="800" />
 Best (0.5)
