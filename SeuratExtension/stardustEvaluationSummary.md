@@ -37,9 +37,9 @@
 | | | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 |0:1 full|1:4 full|1:2 full|3:4 full|1:1 full|
-|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />
+|<img  src="https://user-images.githubusercontent.com/25981629/99400906-d7528d00-28e7-11eb-8902-35ede4bc8450.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402021-2b11a600-28e9-11eb-94cb-b131a603acc1.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402007-2816b580-28e9-11eb-9e05-3b16ff723704.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402027-2d740000-28e9-11eb-829b-0dbe94427147.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402037-2f3dc380-28e9-11eb-9aea-ce43cde8047b.png" width="200" />
 |0:1 scores >= 0.5|1:4 scores >= 0.5|1:2 scores >= 0.5|3:4 scores >= 0.5|1:1 scores >= 0.5|
-|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />|<img  src="" width="200" />
+|<img  src="https://user-images.githubusercontent.com/25981629/99400900-d4f03300-28e7-11eb-8490-8aeee955305e.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402012-2947e280-28e9-11eb-9055-cb83578bb2ba.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99401990-23520180-28e9-11eb-9d67-42a5534f3849.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402024-2baa3c80-28e9-11eb-9f84-cce71a5f1ef8.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99402029-2e0c9680-28e9-11eb-85be-5bad33508683.png" width="200" />
 
 
 
@@ -47,7 +47,7 @@
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |Stability scores comparisons|Statistical evaluation|Tissue image|
-|<img src="https://user-images.githubusercontent.com/25981629/99257943-1d402000-2818-11eb-98ed-ae08678a3eab.png" width="400" />|<img src="https://user-images.githubusercontent.com/25981629/99182372-ee9d4900-2734-11eb-9f9d-d808a63938b6.png" width="300" />|<img src="https://user-images.githubusercontent.com/25981629/99397163-fac70900-28e2-11eb-913e-92bc4adf3a52.jpg" width="248" />|
+|<img src="https://user-images.githubusercontent.com/25981629/99257943-1d402000-2818-11eb-98ed-ae08678a3eab.png" width="400" />|<img src="https://user-images.githubusercontent.com/25981629/99182372-ee9d4900-2734-11eb-9f9d-d808a63938b6.png" width="300" />|<img src="https://user-images.githubusercontent.com/25981629/99402539-bee37200-28e9-11eb-8682-209cf18a78a6.jpg" width="248" />|
 
 | | | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
