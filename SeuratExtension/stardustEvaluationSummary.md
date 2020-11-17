@@ -1,6 +1,8 @@
 # Stardust statistical evaluation across 4 datasets
 
 ## Human Lymph Node
+<img style="float:left;margin-left:10px;" src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
+<img style="float:left;margin-left:10px;" src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
 
 <span style="float:left;">
     <p>Stability scores comparisons</p>
