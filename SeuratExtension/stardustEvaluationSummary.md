@@ -3,21 +3,21 @@
 ## Human Lymph Node
 
 <span style="float:left;">
-    <ps>Stability scores comparisons</p>
+    <p>Stability scores comparisons</p>
     <img src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
 </span>
 <span style="float:left;margin-left:10px;">
-    <ps>Statistical evaluation</p>
+    <p>Statistical evaluation</p>
     <img src="https://user-images.githubusercontent.com/25981629/99182307-877f9480-2734-11eb-82e2-ab416728dfbd.png" width="300" />
 </span>
 
 <span style="float:left;margin-left:10px;">
-    <ps>Tissue image</p>
+    <p>Tissue image</p>
     <img src="https://user-images.githubusercontent.com/25981629/99374597-04d90f80-28c3-11eb-8c09-a0052acff060.jpg" width="248" />
 </span>
 
 <span style="clear:left;float:left;">
-    <ps>0:1 full</p>
+    <p>0:1 full</p>
     <img  src="https://user-images.githubusercontent.com/25981629/99374577-fe4a9800-28c2-11eb-8e47-2193eb437600.png" width="200" />
 </span>
 <span style="float: left;margin-left:10px;">
@@ -38,7 +38,7 @@
 </span>
 
 <span style="clear:left;float:left;">
-    <ps>0:1 scores >= 0.5</p>
+    <p>0:1 scores >= 0.5</p>
     <img  src="https://user-images.githubusercontent.com/25981629/99374571-fdb20180-28c2-11eb-9d5a-feb59933339b.png" width="200" />
 </span>
 <span style="float: left;margin-left:10px;">
