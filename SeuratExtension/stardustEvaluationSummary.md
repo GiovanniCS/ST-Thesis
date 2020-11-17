@@ -1,22 +1,10 @@
 # Stardust statistical evaluation across 4 datasets
 
 ## Human Lymph Node
-<img style="float:left;margin-left:10px;" src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
-<img style="float:left;margin-left:10px;" src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
-
-<span style="float:left;">
-    <p>Stability scores comparisons</p>
-    <img src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
-</span>
-<span style="float:left;margin-left:10px;">
-    <p>Statistical evaluation</p>
-    <img src="https://user-images.githubusercontent.com/25981629/99182307-877f9480-2734-11eb-82e2-ab416728dfbd.png" width="300" />
-</span>
-
-<span style="float:left;margin-left:10px;">
-    <p>Tissue image</p>
-    <img src="https://user-images.githubusercontent.com/25981629/99374597-04d90f80-28c3-11eb-8c09-a0052acff060.jpg" width="248" />
-</span>
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|Stability scores comparisons|Statistical evaluation|Tissue image|
+|<img src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />|<img src="https://user-images.githubusercontent.com/25981629/99182307-877f9480-2734-11eb-82e2-ab416728dfbd.png" width="300" />|<img src="https://user-images.githubusercontent.com/25981629/99374597-04d90f80-28c3-11eb-8c09-a0052acff060.jpg" width="248" />|
 
 <span style="clear:left;float:left;">
     <p>0:1 full</p>
