@@ -1,11 +1,20 @@
 # Stardust statistical evaluation across 4 datasets
 
-## <p style="clear: both;">Human Lymph Node</p>
-### Stability scores comparisons AND Statistical evaluation for HLN dataset   
+## Human Lymph Node
 
-<img style="float: left;margin:0 10px 10px 0" src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
+<span style="float:left;">
+    <ps>Stability scores comparisons</p>
+    <img src="https://user-images.githubusercontent.com/25981629/99182007-6cac2080-2732-11eb-9fa3-b66756353145.png" width="400" />
+</span>
+<span style="float:left;margin-left:10px;">
+    <ps>Statistical evaluation</p>
+    <img src="https://user-images.githubusercontent.com/25981629/99182307-877f9480-2734-11eb-82e2-ab416728dfbd.png" width="300" />
+</span>
 
-<img style="float: left;" src="https://user-images.githubusercontent.com/25981629/99182307-877f9480-2734-11eb-82e2-ab416728dfbd.png" width="300" />
+<span style="float:left;margin-left:10px;">
+    <ps>Tissue image</p>
+    <img src="https://user-images.githubusercontent.com/25981629/99374597-04d90f80-28c3-11eb-8c09-a0052acff060.jpg" width="248" />
+</span>
 
 <span style="clear:left;float:left;">
     <ps>0:1 full</p>
@@ -49,7 +58,6 @@
     <img  src="https://user-images.githubusercontent.com/25981629/99374590-0276b580-28c3-11eb-89e0-d28d7b936e58.png" width="200" />
 </span>
 
-### <p style="clear: both;">Plot of spots with score >= 0.5</p>
 
 ## <p style="clear: both;"> Human Breast Cancer 1</p>
 ### Stability scores comparisons AND Statistical evaluation for HBC1 dataset
