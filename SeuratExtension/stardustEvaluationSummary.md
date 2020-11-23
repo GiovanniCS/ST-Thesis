@@ -47,7 +47,7 @@
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |Stability scores comparisons|Statistical evaluation|Tissue image|
-|<img src="https://user-images.githubusercontent.com/25981629/99257943-1d402000-2818-11eb-98ed-ae08678a3eab.png" width="400" />|<img src="https://user-images.githubusercontent.com/25981629/99182372-ee9d4900-2734-11eb-9f9d-d808a63938b6.png" width="300" />|<img src="https://user-images.githubusercontent.com/25981629/99402539-bee37200-28e9-11eb-8682-209cf18a78a6.jpg" width="248" />|
+|<img src="https://user-images.githubusercontent.com/25981629/99257943-1d402000-2818-11eb-98ed-ae08678a3eab.png" width="400" />|<img src="https://user-images.githubusercontent.com/25981629/99949775-dacc9500-2d7b-11eb-9421-e5b22c38811b.png" width="300" />|<img src="https://user-images.githubusercontent.com/25981629/99402539-bee37200-28e9-11eb-8682-209cf18a78a6.jpg" width="248" />|
 
 | | | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
