@@ -28,6 +28,20 @@
 |<img  src="https://user-images.githubusercontent.com/25981629/99399220-a83b1c00-28e5-11eb-84fc-c0eca768572f.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99399205-a40efe80-28e5-11eb-945c-c3b2c61e0530.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99399179-9ce7f080-28e5-11eb-95f3-1984fefb7988.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99399215-a6715880-28e5-11eb-912c-0386bef3a799.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/99399230-aa04df80-28e5-11eb-824a-b38c38d8178b.png" width="200" />
 
 
+## Human Breast Cancer 2
+| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|Stability scores comparisons|Statistical evaluation|Tissue image|
+|<img src="https://user-images.githubusercontent.com/25981629/100145275-5facd100-2e98-11eb-95fe-71816ca7d2db.png" width="400" />||<img src="https://user-images.githubusercontent.com/25981629/100145324-705d4700-2e98-11eb-98fb-2fd22e10bb8a.png" width="248"/>|
+
+| | | | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+|0:1 full|1:4 full|1:2 full|3:4 full|1:1 full|
+|<img  src="https://user-images.githubusercontent.com/25981629/100145253-5885c300-2e98-11eb-84d5-ee139382bf9e.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145172-38560400-2e98-11eb-8227-88dcaf235f35.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145130-283e2480-2e98-11eb-8768-91cdad9602e6.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145211-47d54d00-2e98-11eb-8381-123a90eca9e9.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145301-689da280-2e98-11eb-8a1d-9dca130e1467.png" width="200" />
+|0:1 scores >= 0.5|1:4 scores >= 0.5|1:2 scores >= 0.5|3:4 scores >= 0.5|1:1 scores >= 0.5|
+|<img  src="https://user-images.githubusercontent.com/25981629/100145233-502d8800-2e98-11eb-86cf-7b1e75b7cb4e.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145159-2ffdc900-2e98-11eb-8335-3540066b0055.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145112-1d838f80-2e98-11eb-962b-0a1cb35b8a07.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145189-4015a880-2e98-11eb-9602-b9530da0e8b7.png" width="200" />|<img  src="https://user-images.githubusercontent.com/25981629/100145277-60456780-2e98-11eb-94fd-09c9e4e6adc4.png" width="200" />
+
+
 ## Mouse Kidney
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
